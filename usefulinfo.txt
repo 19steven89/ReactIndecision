@@ -1,0 +1,9 @@
+added: sudo npm i -g live-server to view the app from the live server
+
+added babel: sudo npm i -g babel-cli@6.24.1
+
+added command: yarn add babel-preset-react@6.24.1 babel-preset-env@1.5.2
+
+command takes the code in src/app.js and converts it into the
+putput file in scripts/app.js: babel app.js --outfile=public/scripts/app.js --presets=env,react
+
