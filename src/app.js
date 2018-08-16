@@ -29,19 +29,31 @@ class Header extends React.Component {
 };
 
 class Action extends React.Component{
+
+    handlePick(){
+        alert("Handle Pick");
+    }
+
     render(){
         return (
             <div>
-                <button>What Should I Do?</button>
+                <button onClick={this.handlePick}>What Should I Do?</button>
             </div>
         );
     }
 };
 
 class Options extends React.Component{
+
+    handleRemoveAll(){
+        alert("Removed All");
+    }    
+
     render(){
         return (
             <div>
+            <button onClick={this.handleRemoveAll}>Remove All</button>
+
                 {
                     //add the options from the array to the list displayed to the user using the prop defined above in the IndecisionApp class
                     this.props.options.map((option) => <Option key ={option} optionText={option} />)
@@ -63,10 +75,24 @@ class Option extends React.Component{
 }
 
 class AddOption extends React.Component{
+
+    handleOptionSubmit(e){
+        e.preventDefault();
+        //e.target is the form element, then into its elements to target the option value input by user
+        const option = e.target.elements.option.value.trim();
+
+        if(option){
+            alert(option);
+        }
+    }
+
     render(){
         return (
             <div>
-                <p>AddOption Component Here</p>
+                <form onSubmit={this.handleOptionSubmit}>
+                <input type="text" name="option"/>
+                <button>Add Option</button>
+                </form>
             </div>
         );
     };
