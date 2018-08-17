@@ -45,11 +45,19 @@ class Action extends React.Component{
 
 class Options extends React.Component{
 
+    constructor(props){
+        //call to the superclass: React.Component
+        super(props);
+        //line below makes sure that when the "this" keyword is used with handleRemoveAll, the "this" binding is kept and still works
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
+
     handleRemoveAll(){
         alert("Removed All");
     }    
 
     render(){
+        //use the JS method bind to bind the "this" keyword to be in the same context as the this keyword used below
         return (
             <div>
             <button onClick={this.handleRemoveAll}>Remove All</button>
