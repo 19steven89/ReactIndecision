@@ -15,12 +15,14 @@ var IndecisionApp = function (_React$Component) {
     function IndecisionApp(props) {
         _classCallCheck(this, IndecisionApp);
 
+        //set up binding for "this" to be used within the render function below
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
+        _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.state = {
-            options: ["Thing One", "Thing Two", "Thing Three"]
+            options: []
         };
         return _this;
     }
@@ -42,22 +44,47 @@ var IndecisionApp = function (_React$Component) {
             alert(option);
         }
     }, {
+        key: "handleAddOption",
+        value: function handleAddOption(option) {
+
+            if (!option) {
+                // if option is empty string propmt user to enter valid value
+                return "Enter Valid Value to Add Item";
+            } else if (this.state.options.indexOf(option) > -1) {
+                // if option exists in array already propmt user of invalid entry. 
+                // -1 would mean it doesn't exist in the array at all
+                return "This option already exists";
+            }
+
+            this.setState(function (prevState) {
+                return {
+                    // add the new option the user enters to the array using prevState to concat the new value
+                    // and return the new array with the added option value
+                    options: prevState.options.concat(option)
+                };
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             var title = "Indecision";
             var subtitle = "Put your life in the hands of a computer";
 
             // render the components listed below as children on the IndecisionApp as nested components 
-            return React.createElement(
-                "div",
-                null,
-                React.createElement(Header, { title: title, subtitle: subtitle }),
-                React.createElement(Action, { hasOptions: this.state.options.length > 0,
-                    handlePick: this.handlePick }),
-                React.createElement(Options, {
-                    options: this.state.options,
-                    handleDeleteOptions: this.handleDeleteOptions }),
-                React.createElement(AddOption, null)
+            return (
+                // component to handle access the method via "this"     
+                React.createElement(
+                    "div",
+                    null,
+                    React.createElement(Header, { title: title, subtitle: subtitle }),
+                    React.createElement(Action, { hasOptions: this.state.options.length > 0,
+                        handlePick: this.handlePick }),
+                    React.createElement(Options, {
+                        options: this.state.options,
+                        handleDeleteOptions: this.handleDeleteOptions }),
+                    React.createElement(AddOption, {
+                        handleAddOption: this.handleAddOption })
+                )
             );
         }
     }]);
@@ -191,37 +218,56 @@ var Option = function (_React$Component5) {
 var AddOption = function (_React$Component6) {
     _inherits(AddOption, _React$Component6);
 
-    function AddOption() {
+    function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
+        var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+
+        _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
+        _this6.state = {
+            // by default no error exists by ading an option to the arra in the handleAddOption function above
+            error: undefined
+        };
+        return _this6;
     }
 
     _createClass(AddOption, [{
-        key: "handleOptionSubmit",
-        value: function handleOptionSubmit(e) {
+        key: "handleAddOption",
+        value: function handleAddOption(e) {
             e.preventDefault();
             //e.target is the form element, then into its elements to target the option value input by user
             var option = e.target.elements.option.value.trim();
+            // pass in the option text input by the user to the function above to be added to the optiosn array
+            var error = this.props.handleAddOption(option);
 
-            if (option) {
-                alert(option);
-            }
+            this.setState(function () {
+                return { error: error };
+            });
         }
     }, {
         key: "render",
         value: function render() {
-            return React.createElement(
-                "div",
-                null,
+            return (
+                // call handleAddOption mathod defined just above. within the if statement call handleAddOption
+                // from the IndecisionApp class
+                // if the error exists then output error msg returned from handleAddOption from IndecisionApp
                 React.createElement(
-                    "form",
-                    { onSubmit: this.handleOptionSubmit },
-                    React.createElement("input", { type: "text", name: "option" }),
-                    React.createElement(
-                        "button",
+                    "div",
+                    null,
+                    this.state.error && React.createElement(
+                        "p",
                         null,
-                        "Add Option"
+                        this.state.error
+                    ),
+                    React.createElement(
+                        "form",
+                        { onSubmit: this.handleAddOption },
+                        React.createElement("input", { type: "text", name: "option" }),
+                        React.createElement(
+                            "button",
+                            null,
+                            "Add Option"
+                        )
                     )
                 )
             );
