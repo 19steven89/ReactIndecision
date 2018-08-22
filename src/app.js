@@ -7,6 +7,7 @@ class IndecisionApp extends React.Component{
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.state = {
             options: props.options
         }
@@ -14,11 +15,14 @@ class IndecisionApp extends React.Component{
 
     //set the options array to [] if the user clicks removeAll button
     handleDeleteOptions(){
-        this.setState(() => {
-            return {
-                options: []
-            };
-        });
+        this.setState(() => ({options: [] }));
+    }
+
+    handleDeleteOption(optionToRemove){
+        //console.log("HDO", option);
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
     }
 
     handlePick(){
@@ -38,13 +42,9 @@ class IndecisionApp extends React.Component{
             return "This option already exists";
         }
 
-        this.setState((prevState) => {
-            return {
-                // add the new option the user enters to the array using prevState to concat the new value
-                // and return the new array with the added option value
-                options: prevState.options.concat(option)  
-            };
-        });
+        // add the new option the user enters to the array using prevState to concat the new value
+        // and return the new array with the added option value
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
         
     }
 
@@ -61,7 +61,8 @@ class IndecisionApp extends React.Component{
                 handlePick={this.handlePick}/>
                 <Options 
                 options={this.state.options}
-                handleDeleteOptions={this.handleDeleteOptions}/>
+                handleDeleteOptions={this.handleDeleteOptions}
+                handleDeleteOption={this.handleDeleteOption}/>
                 <AddOption
                 handleAddOption={this.handleAddOption}/>
              </div>
@@ -105,8 +106,14 @@ const Options = (props) => {
 
                 {
                     //add the options from the array to the list displayed to the user using the prop defined above in the IndecisionApp class
-                    props.options.map((option) => <Option key ={option} optionText={option} />)
-                }
+                    props.options.map((option) => (
+                        <Option 
+                            key ={option} 
+                            optionText={option}
+                            handleDeleteOption={props.handleDeleteOption}
+                        />
+                    )
+                )}
             </div>
         );
 };
@@ -116,6 +123,11 @@ const Option = (props) => {
         return (
              <div>
                 {props.optionText}
+                <button 
+                        onClick={(e) => {
+                            props.handleDeleteOption(props.optionText);
+                        }}
+                        >Remove</button>
              </div>
         );
 }
@@ -137,7 +149,7 @@ class AddOption extends React.Component{
         // pass in the option text input by the user to the function above to be added to the optiosn array
         const error = this.props.handleAddOption(option);
 
-        this.setState(() => {return {error} });
+        this.setState(() => ({error} ));
     }
 
     render(){
