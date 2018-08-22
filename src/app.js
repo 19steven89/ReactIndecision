@@ -68,56 +68,46 @@ class IndecisionApp extends React.Component{
     }
 }
 
-class Header extends React.Component {
-    render() {        
+const Header = (props) => {
         return (
             <div>
-             <h1>{this.props.title}</h1>
-             <h2>{this.props.subtitle}</h2>
+             <h1>{props.title}</h1>
+             <h2>{props.subtitle}</h2>
             </div>
         );
-    }
 };
 
-class Action extends React.Component{
-
-    render(){
+const Action = (props) => {
         return (
             <div>
-                <button onClick={this.props.handlePick}
-                disabled={!this.props.hasOptions}>
+                <button onClick={props.handlePick}
+                disabled={!props.hasOptions}>
                 What Should I Do?</button>
             </div>
         );
-    }
 };
 
-class Options extends React.Component{  
-
-    render(){
+const Options = (props) => {  
         //use the JS method bind to bind the "this" keyword to be in the same context as the this keyword used below
         return (
             <div>
-            <button onClick={this.props.handleDeleteOptions}>Remove All</button>
+            <button onClick={props.handleDeleteOptions}>Remove All</button>
 
                 {
                     //add the options from the array to the list displayed to the user using the prop defined above in the IndecisionApp class
-                    this.props.options.map((option) => <Option key ={option} optionText={option} />)
+                    props.options.map((option) => <Option key ={option} optionText={option} />)
                 }
             </div>
         );
-    };
 };
 
-class Option extends React.Component{
-    render() {
+const Option = (props) => {
         // add the optiontext prop defined in the parent class: Options defined above, used to display each option to the user
         return (
              <div>
-                {this.props.optionText}
+                {props.optionText}
              </div>
         );
-    }
 }
 
 class AddOption extends React.Component{
@@ -155,5 +145,15 @@ class AddOption extends React.Component{
         );
     };
 };
+
+// const User = (props) => {
+//     return(
+//         <div>
+//             <p>Name: {props.name}</p>
+//             <p>Age: {props.age}</p>
+//         </div>
+//     );
+// };
+
 
 ReactDOM.render(<IndecisionApp/>, document.getElementById("app"));
