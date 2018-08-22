@@ -22,10 +22,13 @@ var IndecisionApp = function (_React$Component) {
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.state = {
-            options: []
+            options: props.options
         };
         return _this;
     }
+
+    //set the options array to [] if the user clicks removeAll button
+
 
     _createClass(IndecisionApp, [{
         key: "handleDeleteOptions",
@@ -76,7 +79,7 @@ var IndecisionApp = function (_React$Component) {
                 React.createElement(
                     "div",
                     null,
-                    React.createElement(Header, { title: title, subtitle: subtitle }),
+                    React.createElement(Header, { subtitle: subtitle }),
                     React.createElement(Action, { hasOptions: this.state.options.length > 0,
                         handlePick: this.handlePick }),
                     React.createElement(Options, {
@@ -101,12 +104,21 @@ var Header = function Header(props) {
             null,
             props.title
         ),
-        React.createElement(
+        props.subtitle && React.createElement(
             "h2",
             null,
             props.subtitle
         )
     );
+};
+
+IndecisionApp.defaultProps = {
+    options: []
+};
+
+//set up default value for the Header title value
+Header.defaultProps = {
+    title: "Indecision"
 };
 
 var Action = function Action(props) {
