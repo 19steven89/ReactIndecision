@@ -28,10 +28,40 @@ var IndecisionApp = function (_React$Component) {
         return _this;
     }
 
-    //set the options array to [] if the user clicks removeAll button
+    //react lifecycle method
 
 
     _createClass(IndecisionApp, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            try {
+                var json = localStorage.getItem("options");
+                var options = JSON.parse(json);
+
+                if (options) {
+                    //set local storage if options exist within the array
+                    this.setState(function () {
+                        return { options: options };
+                    });
+                }
+            } catch (e) {
+                //do nothing at all. Try block is used to add items to local storage only if the data is valid.
+            }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.options.length !== this.state.options.length) {
+                //save the array options to local storage to keep the items in the array when app is closed
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem("options", json);
+                console.log("componentDidUpdate");
+            }
+        }
+
+        //set the options array to [] if the user clicks removeAll button
+
+    }, {
         key: "handleDeleteOptions",
         value: function handleDeleteOptions() {
             this.setState(function () {
@@ -154,6 +184,11 @@ var Options = function Options(props) {
             { onClick: props.handleDeleteOptions },
             "Remove All"
         ),
+        props.options.length === 0 && React.createElement(
+            "p",
+            null,
+            "Please add an option to get started!"
+        ),
 
         //add the options from the array to the list displayed to the user using the prop defined above in the IndecisionApp class
         props.options.map(function (option) {
@@ -212,6 +247,11 @@ var AddOption = function (_React$Component2) {
             this.setState(function () {
                 return { error: error };
             });
+
+            if (!error) {
+                //clear the option text field input if the user enters a valid value into the options array
+                e.target.elements.option.value = "";
+            }
         }
     }, {
         key: "render",

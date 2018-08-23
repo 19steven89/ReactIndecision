@@ -13,6 +13,30 @@ class IndecisionApp extends React.Component{
         }
     }
 
+    //react lifecycle method
+    componentDidMount(){
+        try{
+            const json = localStorage.getItem("options");
+            const options = JSON.parse(json);
+    
+            if(options){
+                //set local storage if options exist within the array
+                this.setState(() => ({options}));
+            } 
+        }catch(e){
+            //do nothing at all. Try block is used to add items to local storage only if the data is valid.
+        }  
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevState.options.length !== this.state.options.length){
+            //save the array options to local storage to keep the items in the array when app is closed
+            const json = JSON.stringify(this.state.options);
+            localStorage.setItem("options", json);
+            console.log("componentDidUpdate");
+        }        
+    }
+
     //set the options array to [] if the user clicks removeAll button
     handleDeleteOptions(){
         this.setState(() => ({options: [] }));
@@ -103,7 +127,7 @@ const Options = (props) => {
         return (
             <div>
             <button onClick={props.handleDeleteOptions}>Remove All</button>
-
+                {props.options.length === 0 && <p>Please add an option to get started!</p>}
                 {
                     //add the options from the array to the list displayed to the user using the prop defined above in the IndecisionApp class
                     props.options.map((option) => (
@@ -150,6 +174,11 @@ class AddOption extends React.Component{
         const error = this.props.handleAddOption(option);
 
         this.setState(() => ({error} ));
+
+        if(!error){
+            //clear the option text field input if the user enters a valid value into the options array
+            e.target.elements.option.value = "";
+        }
     }
 
     render(){
