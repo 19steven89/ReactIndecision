@@ -9,7 +9,7 @@ class IndecisionApp extends React.Component{
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.state = {
-            options: props.options
+            options: []
         }
     }
 
@@ -103,9 +103,6 @@ const Header = (props) => {
         );
 };
 
-IndecisionApp.defaultProps = {
-    options: []
-};
 
 //set up default value for the Header title value
 Header.defaultProps = {
