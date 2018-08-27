@@ -7,3 +7,14 @@ added command: yarn add babel-preset-react@6.24.1 babel-preset-env@1.5.2
 command takes the code in src/app.js and converts it into the
 putput file in scripts/app.js: babel app.js --outfile=public/scripts/app.js --presets=env,react
 
+used sudo npm uninstall -g babel-cli live-server
+to remove both these npm modukes globally. It's best to have the npms installed for each project,
+so that they are included in the dependencies json file which can give details of the npms used
+to run the project rather than global modules.
+
+used: npm add live-server babel-cli@6.24.1
+to install these npm modules locally which are now included in dependencies of the package.json file
+
+added scripts to the app. Cam now use npm run serve to run live-server public from the app.
+also added the script "build" to run compile the react app file into the app.js in the scripts folder
+ 
