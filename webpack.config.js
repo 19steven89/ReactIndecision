@@ -7,6 +7,7 @@ const path = require("path");
 //console.log(path.join(__dirname, "public"));
 
 module.exports = {
+    // entry is the file that gets loaded and executed
     entry: "./src/app.js",
     output: {
         path: path.join(__dirname, "public"),
