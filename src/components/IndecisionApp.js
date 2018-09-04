@@ -7,16 +7,41 @@ import Options from "./Options.js";
 //used as a React component called from the jsx const below. Components must begin with upper case.
 export default class IndecisionApp extends React.Component{
 
-    constructor(props){
-        super(props);
-        //set up binding for "this" to be used within the render function below
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.state = {
-            options: []
+    state = {
+        options: []
+    };
+
+    handleDeleteOption = (optionToRemove) => {
+        //console.log("HDO", option);
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
+    }
+
+    handlePick = () => {
+        const randomNum = Math.floor(Math.random() * (this.state.options.length));
+        var option = this.state.options[randomNum];
+        alert(option);
+    }
+
+    handleAddOption = (option) => {
+        if(!option){
+            // if option is empty string propmt user to enter valid value
+            return "Enter Valid Value to Add Item";
+        }else if(this.state.options.indexOf(option) > -1){
+            // if option exists in array already propmt user of invalid entry. 
+            // -1 would mean it doesn't exist in the array at all
+            return "This option already exists";
         }
+
+        // add the new option the user enters to the array using prevState to concat the new value
+        // and return the new array with the added option value
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
+    }
+
+       //set the options array to [] if the user clicks removeAll button
+       handleDeleteOptions = () => {
+        this.setState(() => ({options: [] }));
     }
 
     //react lifecycle method
@@ -41,41 +66,6 @@ export default class IndecisionApp extends React.Component{
             localStorage.setItem("options", json);
             console.log("componentDidUpdate");
         }        
-    }
-
-    //set the options array to [] if the user clicks removeAll button
-    handleDeleteOptions(){
-        this.setState(() => ({options: [] }));
-    }
-
-    handleDeleteOption(optionToRemove){
-        //console.log("HDO", option);
-        this.setState((prevState) => ({
-            options: prevState.options.filter((option) => optionToRemove !== option)
-        }));
-    }
-
-    handlePick(){
-        const randomNum = Math.floor(Math.random() * (this.state.options.length));
-        var option = this.state.options[randomNum];
-        alert(option);
-    }
-
-    handleAddOption(option){
-
-        if(!option){
-            // if option is empty string propmt user to enter valid value
-            return "Enter Valid Value to Add Item";
-        }else if(this.state.options.indexOf(option) > -1){
-            // if option exists in array already propmt user of invalid entry. 
-            // -1 would mean it doesn't exist in the array at all
-            return "This option already exists";
-        }
-
-        // add the new option the user enters to the array using prevState to concat the new value
-        // and return the new array with the added option value
-        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
-        
     }
 
     render() {

@@ -21,3 +21,10 @@ also added the script "build" to run compile the react app file into the app.js 
  added npm webpack-dev-server with this it can replace the live-server npm as well as the babel build
  this also takes away the need for bundle.js file as the app will generate this file automaticaly when compiling
  without saving it to the directory
+
+ added npm: babel-plugin-transform-class-properties
+ and the code: 
+   "plugins": [
+        "transform-class-properties"
+    ]
+    to the babelrc file. this npm is for using class properties, with new ES6 syntax

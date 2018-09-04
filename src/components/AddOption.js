@@ -2,16 +2,13 @@ import React from "react";
 
 
 export default class AddOption extends React.Component{
-    constructor(props){
-        super(props);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.state = {
-            // by default no error exists by ading an option to the arra in the handleAddOption function above
-            error: undefined
-        }
-    }
 
-    handleAddOption(e){
+    state = {
+           // by default no error exists by ading an option to the arra in the handleAddOption function above
+           error: undefined
+    };
+
+    handleAddOption = (e) =>{
         e.preventDefault();
         //e.target is the form element, then into its elements to target the option value input by user
         const option = e.target.elements.option.value.trim();
