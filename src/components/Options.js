@@ -1,9 +1,8 @@
 import React from "react";
 import Option from "./Option.js";
 
-const Options = (props) => {  
+const Options = (props) => (
     //use the JS method bind to bind the "this" keyword to be in the same context as the this keyword used below
-    return (
         <div>
         <button onClick={props.handleDeleteOptions}>Remove All</button>
             {props.options.length === 0 && <p>Please add an option to get started!</p>}
@@ -19,7 +18,6 @@ const Options = (props) => {
                 )
             )}
         </div>
-    );
-};
+);
 
 export default Options;

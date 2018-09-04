@@ -1,8 +1,7 @@
 import React from "react";
 
-const Option = (props) => {
+const Option = (props) => (
     // add the optiontext prop defined in the parent class: Options defined above, used to display each option to the user
-    return (
          <div>
             {props.optionText}
             <button 
@@ -11,7 +10,6 @@ const Option = (props) => {
                     }}
                     >Remove</button>
          </div>
-    );
-};
+);
 
 export default Option;
