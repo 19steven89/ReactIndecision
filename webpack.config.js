@@ -20,6 +20,12 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/
         }]
+    },
+    // lets the browser figure out where original errors are sourced from and is useful for debugging
+    devtool: "cheap-module-eval-source-map",
+    devServer:{
+        // set up base which signals to webpack-dev-server where to find the public files
+        contentBase: path.join(__dirname, "public")
     }
 };
 
