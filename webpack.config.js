@@ -19,6 +19,13 @@ module.exports = {
             // files that end with .js to run babel 
             test: /\.js$/,
             exclude: /node_modules/
+        },{
+            test: /\.scss$/,
+            use: [
+                "style-loader",
+                "css-loader",
+                "sass-loader"
+            ]
         }]
     },
     // lets the browser figure out where original errors are sourced from and is useful for debugging

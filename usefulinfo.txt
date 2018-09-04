@@ -28,3 +28,6 @@ also added the script "build" to run compile the react app file into the app.js 
         "transform-class-properties"
     ]
     to the babelrc file. this npm is for using class properties, with new ES6 syntax
+
+    added npm node-sass for converting scss into regular css and npm sass-loader for loading css files 
+    also configured the webpack.config file to support the scss files
