@@ -1,5 +1,5 @@
-$brandColour: lightgreen;
-
-* {
-    color: $brandColour;
-}
+// imported scss base file which is a partial. when doing so the _ and extension is left out
+@import "./base/settings";
+@import "./base/base";
+@import "./components/container";
+@import "./components/header";

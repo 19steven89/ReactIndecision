@@ -1,0 +1,13 @@
+//filename starts with an _ as its a partial
+
+html{
+    // 1 rem is 16pix, making the size 62.5& will make the standard size 10 pixels
+    font-size: 62.5%;
+}
+
+body{
+    // 1.6 rem will be 10 pixels
+    background: $dark-blue;
+    font-size: 1.6rem;
+    font-family: Helvetica, Arial, sans-serif;
+}

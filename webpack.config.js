@@ -20,7 +20,8 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/
         },{
-            test: /\.scss$/,
+        //    ? here is to support both css and scss files
+            test: /\.s?css$/,
             use: [
                 "style-loader",
                 "css-loader",
@@ -33,7 +34,6 @@ module.exports = {
     devServer:{
         // set up base which signals to webpack-dev-server where to find the public files
         contentBase: path.join(__dirname, "public")
-    }
+    },
+    performance: { hints: false }
 };
-
-//loader 
