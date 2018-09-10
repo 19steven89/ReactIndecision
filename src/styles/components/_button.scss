@@ -6,7 +6,7 @@
     color: white;
     font-weight: bold;
     font-size: $l-size;
-    margin-bottom: $xl-size;
+    margin-bottom: $m-size;
     padding: 2.4rem;
     width: 100%;
 }
@@ -29,4 +29,11 @@
     border: none;
     color: $off-white;
     padding: 0%;
+}
+
+// larger sized screens
+@media(min-width: 45rem){
+    .big-button{
+        margin-bottom: $xl-size;
+    }
 }
